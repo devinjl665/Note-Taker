@@ -8,17 +8,17 @@ const uuid = require('uuid');
 api.get('/', (req, res) => {
     fs.readFile('./db/db.json', 'utf-8', (err, data) => {
         if (err) {
-        console.error(err);
+            console.error(err);
         } else {
         const parsedNote = JSON.parse(data);
         res.json(parsedNote);
         }
-    });
-})
+    })
+});
 
 
 
-api.post('/', (req, res) => {
+api.post('/api/notes', (req, res) => {
     const{title, text} = req.body;
     if(req.body){
         const newNote = { 
