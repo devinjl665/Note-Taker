@@ -1,32 +1,79 @@
 const fs = require('fs');
-const router = require('express').Router();
-const id = require('uniqid');
+const api = require('express').Router();
+const uuid = require('uuid');
 
 
-router.get('/api/notes', (req, res) => {
-    fs.readFile('db.json', 'utf-8', (err, data) => {
+
+
+api.get('/', (req, res) => {
+    fs.readFile('./db/db.json', 'utf-8', (err, data) => {
         if (err) {
-            throw err;
+        console.error(err);
         } else {
-            res.json(JSON.parse(data));
+        const parsedNote = JSON.parse(data);
+        res.json(parsedNote);
         }
+    });
+})
+
+
+
+api.post('/', (req, res) => {
+    const{title, text} = req.body;
+    if(req.body){
+        const newNote = { 
+            title, 
+            text, 
+            id: uuid.v4(),
+        };
+
+
+        fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+            const parsedNote = JSON.parse(data);
+            parsedNote.push(newNote);
+
+
+        fs.writeFile('./db/db.json', JSON.stringify(parsedNote, null, 4),
+            (writeError) => writeError ? console.error(writeError) : console.info('Successfully updated.'));    
+            }
+        });
+    }
+    
+    res.redirect('return');
+});
+
+
+api.delete('/:id', (req, res) => {
+    const {id} = req.params;
+
+    fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            var parsedNote = JSON.parse(data);
+        }
+
+        const savedNotes = []
+
+        for(entry of parsedNote) {
+            if(entry.id == id){
+                console.log(`Note ${id} is to be deleted`)
+            } else {
+                savedNotes.push(entry)
+            }
+        }
+
+
+
+    fs.writeFile('./db/db.json', JSON.stringify(parsedNote, null, 4),
+    (writeError) => writeError ? console.error(writeError) : console.info('Successfully updated.'));        
     })
-});
 
-router.post('/api/notes', (req, res) => {
-    const noteDb = JSON.parse(fs.readFileSync('db.json'));
-    const newNote = req.body;
-    newNote.id = id();
-    noteDb.push(newNote);
-    fs.writeFileSync('db.json', JSON.stringify(noteDb));
-    res.json(noteDb);
-});
 
-router.delete('/api/notes/:id', (req, res) => {
-    const noteDb = JSON.parse(fs.readFileSync('db.json'));
-    const deleteNote = noteDb.filter((removeNote) => removeNote.id !== req.params.id);
-    fs.writeFileSync('db.json', JSON.stringify(deleteNote));
-    res.json(deleteNote);
-});
+    res.redirect('return');
+})
 
-module.exports = router;
+module.exports = api;
