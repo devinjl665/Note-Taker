@@ -1,6 +1,6 @@
 const express = require('express');
-const path = require('path');
-const api = require('./routes/index.js');
+const apiRoute = require('./routes/apiRoute.js');
+const htmlRoute = require('./routes/htmlRoute.js');
 
 
 
@@ -17,21 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 
-app.use('/api', api);
+app.use('/api', apiRoute);
+app.use('/', htmlRoute)
 
-
-app.get('/', (req, res) =>
-    res.sendFile(path.join(__dirname, '/public/index'))
-    );
-
-
-app.get('/notes', (req, res) =>
-    res.sendFile(path.join(__dirname, '/public/notes'))
-    );
-
-app.get('/*', (req, res) =>
-    res.sendFile(path.join(__dirname, '/public/index'))
-    );
 
 
 app.listen(PORT, () => 
