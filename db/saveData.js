@@ -7,14 +7,17 @@ const readNote = util.promisify(fs.readFile);
 const writeNote = util.promisify(fs.writeFile);
 
 const save = {
+  // Write notes to the 'db.json' file
   write(notes) {
     const filePath = path.join(__dirname, 'db.json');
     return writeNote(filePath, JSON.stringify(notes, null, 4));
   },
+  // Read notes from the 'db.json' file
   read() {
     const filePath = path.join(__dirname, 'db.json');
     return readNote(filePath, 'utf8');
   },
+  // Retrieve and parse notes from the 'db.json' file
   retrieveNotes() {
     return this.read().then((notes) => {
       let parsedNote;
@@ -26,6 +29,7 @@ const save = {
       return parsedNote;
     });
   },
+  // Add a new note with a unique ID to the 'db.json' file
   addNote(note) {
     const { title, text } = note;
     if (!title || !text) {
