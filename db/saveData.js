@@ -25,13 +25,15 @@ const save = {
   },
   addNote(note) {
     const { title, text } = note;
-    if (!title || !text) { // Fix the condition here
+    if (!title || !text) {
       throw new Error('Title and text fields cannot be left blank');
     }
-    const newNote = { title, text, id: uuidv4() };
+    const newNote = { title, text, id: uuidv4(), };
     return this.retrieveNotes()
-      .then((notes) => [...notes, newNote])
-      .then((editedNotes) => this.write(editedNotes))
+      .then((notes) => {
+        const updatedNotes = [...notes, newNote];
+        return this.write({ notes: updatedNotes });
+      })
       .then(() => newNote);
   },
 };
