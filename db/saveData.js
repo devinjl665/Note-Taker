@@ -1,18 +1,21 @@
 const util = require('util');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+const path = require('path');
 
 const readNote = util.promisify(fs.readFile);
 const writeNote = util.promisify(fs.writeFile);
 
 const save = {
   write(note) {
-    console.log(`Reading from file: ${filePath}`);
-    return writeNote(path.join(__dirname, 'db/db.json'), JSON.stringify(note));
+    const filePath = path.join(__dirname, 'db/db.json');
+    console.log(`Writing to file: ${filePath}`);
+    return writeNote(filePath, JSON.stringify(note));
   },
   read() {
-    console.log(`Writing to file: ${filePath}`);
-    return readNote(path.join(__dirname, 'db/db.json'), 'utf8');
+    const filePath = path.join(__dirname, 'db/db.json');
+    console.log(`Reading from file: ${filePath}`);
+    return readNote(filePath, 'utf8');
   },
   retrieveNotes() {
     return this.read().then((notes) => {
@@ -41,5 +44,3 @@ const save = {
 };
 
 module.exports = save;
-
-
