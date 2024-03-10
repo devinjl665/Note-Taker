@@ -1,6 +1,6 @@
 const util = require('util');
 const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+const uuid = require('uuid');
 
 const readNote = util.promisify(fs.readFile);
 const writeNote = util.promisify(fs.writeFile);
@@ -28,7 +28,7 @@ const save = {
     if (!title || !text) {
       throw new Error('Title and text fields cannot be left blank');
     }
-    const newNote = { title, text, id: uuidv4(), };
+    const newNote = { title, text, id: uuid.v4(), };
     return this.retrieveNotes()
       .then((notes) => {
         const updatedNotes = [...notes, newNote];
