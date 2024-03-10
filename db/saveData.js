@@ -7,10 +7,10 @@ const writeNote = util.promisify(fs.writeFile);
 
 const save = {
   write(note) {
-    return writeNote('db.json', JSON.stringify(note));
+    return writeNote('db/db.json', JSON.stringify(note));
   },
   read() {
-    return readNote('db.json', 'utf8');
+    return readNote('db/db.json', 'utf8');
   },
   retrieveNotes() {
     return this.read().then((notes) => {
