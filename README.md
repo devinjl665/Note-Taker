@@ -6,19 +6,20 @@ Your assignment is to modify starter code to create an application called Note T
 
 ## Demo
 
-<a href="">Note Taker Demo Vid</a>
+<a href="https://drive.google.com/file/d/132rweqFXMYYWc8AdQ5N4nLBtSiXwo_SU/view?usp=drive_link">Note Taker Demo Vid</a>
+<a href="https://deployed-note-taker-app-bae9e3820e63.herokuapp.com/notes">Deployed Heroku App</a>
 
 ## Installation
 
-
+Run "npm install" in the integrated terminal to update to latest modules. To run localhost enter "npm start" in command line and follow link.
 
 ## Usage
 
-
+Once the localhost is launched, click "get started" to start writing down your notes. Once you enter a title and subtext, you will be able to save the note. If you need to start over, press the "clear form" button. If not, press the "save note" button. It will be saved in the left-hand column. After completing a task or no longer needing a specific note, you can delete by clicking on the red trash can icon.
 
 ## Credits
 
-
+I wrote this code with the help of the Wash U in Saint Louis Coding Bootcamp coursework, Stack Overflow, W3Schools, 
 
 ## User Story
 

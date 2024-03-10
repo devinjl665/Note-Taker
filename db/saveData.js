@@ -9,12 +9,10 @@ const writeNote = util.promisify(fs.writeFile);
 const save = {
   write(notes) {
     const filePath = path.join(__dirname, 'db.json');
-    console.log(`Writing to file: ${filePath}`);
     return writeNote(filePath, JSON.stringify(notes, null, 4));
   },
   read() {
     const filePath = path.join(__dirname, 'db.json');
-    console.log(`Reading from file: ${filePath}`);
     return readNote(filePath, 'utf8');
   },
   retrieveNotes() {
