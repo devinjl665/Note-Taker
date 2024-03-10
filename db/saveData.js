@@ -28,7 +28,7 @@ const save = {
     if (!title || !text) {
       throw new Error('Title and text fields cannot be left blank');
     }
-    const newNote = { title, text, id: uuid.v4(), };
+    const newNote = { title, text, id: uuid.v4() };
     return this.retrieveNotes()
       .then((notes) => {
         const updatedNotes = [...notes, newNote];
