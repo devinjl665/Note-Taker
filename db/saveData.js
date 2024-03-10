@@ -7,13 +7,13 @@ const readNote = util.promisify(fs.readFile);
 const writeNote = util.promisify(fs.writeFile);
 
 const save = {
-  write(note) {
-    const filePath = path.join(__dirname, 'db/db.json');
+  write(notes) {
+    const filePath = path.join(__dirname, 'db.json');
     console.log(`Writing to file: ${filePath}`);
-    return writeNote(filePath, JSON.stringify(note));
+    return writeNote(filePath, JSON.stringify(notes, null, 4));
   },
   read() {
-    const filePath = path.join(__dirname, 'db/db.json');
+    const filePath = path.join(__dirname, 'db.json');
     console.log(`Reading from file: ${filePath}`);
     return readNote(filePath, 'utf8');
   },
@@ -37,10 +37,10 @@ const save = {
     return this.retrieveNotes()
       .then((notes) => {
         const updatedNotes = [...notes, newNote];
-        return this.write({ notes: updatedNotes });
+        return this.write(updatedNotes);
       })
       .then(() => newNote);
-  },
+  },  
 };
 
 module.exports = save;
