@@ -25,8 +25,8 @@ const save = {
   },
   addNote(note) {
     const { title, text } = note;
-    if (!text || !text) {
-      throw new Error('Text fields cannot be left blank');
+    if (!title || !text) { // Fix the condition here
+      throw new Error('Title and text fields cannot be left blank');
     }
     const newNote = { title, text, id: uuidv4() };
     return this.retrieveNotes()
